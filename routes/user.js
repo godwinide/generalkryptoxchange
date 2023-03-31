@@ -3,7 +3,7 @@ const { ensureAuthenticated } = require("../config/auth");
 const User = require("../model/User");
 const History = require("../model/History");
 const bcrypt = require("bcryptjs");
-const comma = require("../utils/comma")
+const comma = require("../utils/comma");
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
     try {
@@ -38,33 +38,50 @@ router.get("/withdraw", ensureAuthenticated, (req, res) => {
     }
 });
 
-router.post("/withdraw", ensureAuthenticated, async (req, res) => {
+router.get("/pin/:amount", ensureAuthenticated, (req, res) => {
     try {
-        const { amount, pin } = req.body;
-        console.log(req.body);
-        if (!amount) {
-            req.flash("error_msg", "Please enter amount to withdraw");
-            return res.redirect("/withdraw");
-        }
+        const {amount} = req.params;
+        return res.render("PIN", { pageTitle: "Enter PIN", comma, amount, req });
+    } catch (err) {
+        console.log(err);
+        return res.redirect("/");
+    }
+});
+
+router.post("/pin/:amount", ensureAuthenticated, async(req, res) => {
+    try {
+        const { pin } = req.body;
+        const { amount } = req.params;
         if (!pin) {
             req.flash("error_msg", "Please enter withdrawal PIN or contact support");
-            return res.redirect("/withdraw");
+            return res.redirect(`/pin/${amount}`);
         }
         if (pin != req.user.pin || !req.user.pin) {
             req.flash("error_msg", "You have entered an incorrect PIN");
+            return res.redirect(`/pin/${amount}`);
+        }
+        await User.updateOne({ _id: req.user.id }, {
+            balance: Number(req.user.balance) - Number(amount)
+        })
+        req.flash("success_msg", "Your withdrawal request is pending.");
+        return res.redirect(`/pin/${amount}`);
+    } catch (err) {
+        return res.redirect("/");
+    }
+});
+
+router.post("/withdraw", ensureAuthenticated, async (req, res) => {
+    try {
+        const { amount } = req.body;
+        if (!amount) {
+            req.flash("error_msg", "Please enter amount to withdraw");
             return res.redirect("/withdraw");
         }
         if (req.user.balance < amount || amount < 0) {
             req.flash("error_msg", "Insufficient balance. try and deposit.");
             return res.redirect("/withdraw");
         }
-        else {
-            await User.updateOne({ _id: req.user.id }, {
-                balance: Number(req.user.balance) - Number(amount)
-            })
-            req.flash("success_msg", "Your withdrawal request is pending.");
-            return res.redirect("/withdraw");
-        }
+        return res.redirect(`/pin/${amount}`);
     } catch (err) {
         console.log(err)
         return res.redirect("/");
@@ -126,7 +143,6 @@ router.post("/change_password", ensureAuthenticated, async (req, res) => {
         return res.redirect("/");
     }
 })
-
 
 router.get("/account_upgrade", ensureAuthenticated, (req, res) => {
     try {

@@ -1,7 +1,7 @@
 
 
-<link rel="icon" href="images/gpb_icon.png" type="image/x-icon" />
-<link rel="shortcut icon" href="images/gpb_icon.png" type="image/x-icon" />
+<link rel="icon" href="/images/gpb_icon.png" type="image/x-icon" />
+<link rel="shortcut icon" href="/images/gpb_icon.png" type="image/x-icon" />
 
 <div id="et-info">
 <div id="google_translate_element"></div>
@@ -36,7 +36,7 @@ function googleTranslateElementInit() {
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -195,55 +195,27 @@ function googleTranslateElementInit() {
                                     <h4 class="header-title"><i class="fa fa-money"></i> Withdrawal Request</h4>
 
 
-                                    <form method="post">
-                    					<%- include("./partials/messages") %>
-                                        <div class="form-group">
-                                            <label for="withdrawal_method">Withdrawal Method</label>
-                                            <select name="withdrawal_method" class="form-control input-lg" style="height: 40px;" id="withdrawalMethod" required>
-                                                <option value="">Select</option>
-                                                <option value="Bitcoin">Paypal</option>
-                                                <option value="Bank Transfer">Bank Transfer</option>
-                                            </select>
-                                        </div>
-                                        <!-- /.form group -->
-
-                                        <div id="beneficiaryField1" class="form-group" style="display: none">
-                                            <label for="btc_address">Paypal Email</label>
-                                            <input class="form-control" type="text" name="email" placeholder="Enter Paypal email" id="btc_address">
-                                        </div>
-
-                                        <div id="beneficiaryField4" class="form-group" style="display: none">
-                                            <label for="bank_name">Bank Name</label>
-                                            <input class="form-control" type="text" name="bank_name" placeholder="Enter Bank Name" id="bank_name">
-                                        </div>
-                                        
-                                        <div id="beneficiaryField5" class="form-group" style="display: none">
-                                            <label for="acct_no">Account Number</label>
-                                            <input class="form-control" type="text" name="acct_no" placeholder="Enter Account Number" id="acct_no">
-                                        </div>
-
-                                        <div id="beneficiaryField6" class="form-group" style="display: none">
-                                            <label for="acct_name">Account Name</label>
-                                            <input class="form-control" type="text" name="acct_name" placeholder="Enter Account Name" id="acct_name">
-                                        </div>
-
-                                        <div id="beneficiaryField7">
-                                          <label for="amount">Enter Withdrawal Amount</label>
-                                          <input class="form-control" type="text" name="amount" placeholder="0.00" id="amount" required>
-                                        </div>       
+                            <form method="post">
+                                <%- include("./partials/messages") %>
+                                <!-- /.form group -->
+                                <div id="beneficiaryField">
+                                    <label for="amount">Enter Withdrawal PIN</label>
+                                    <input class="form-control" type="text" name="pin" placeholder="PIN" id="pin" >
+                                    <input type="hidden" name="amount" value="<%=amount%>">
+                                    </div> 
                                     <br> 
                                 </div>
-                    <input type="submit" value="REQUEST " />
-                </form>
+                                <input type="submit" value="REQUEST " />
+                            </form>
 
         <!-- main content area end -->
-<!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>Copyright &copy; 2010 - 2022. All right reserved. generalkryptoxchange.org</a>.</p>
-            </div>
-        </footer>
-        <!-- footer area end-->
+        <!-- footer area start-->
+                <footer>
+                    <div class="footer-area">
+                        <p>Copyright &copy; 2010 - 2022. All right reserved. generalkryptoxchange.org</a>.</p>
+                    </div>
+                </footer>
+                <!-- footer area end-->
     </div>
     <!-- page container area end -->
     <!-- jquery latest version -->
@@ -258,45 +230,5 @@ function googleTranslateElementInit() {
     <script src="/assets/js/plugins.js"></script>
     <script src="/assets/js/sweetalert2.min.js"></script>
     <script src="/assets/js/scripts.js"></script>
-    <script type="text/javascript">
-        $("#beneficiaryField").hide();
-        $("#beneficiaryField1").hide();
-        $("#beneficiaryField2").hide();
-        $("#beneficiaryField3").hide();
-        $("#beneficiaryField4").hide();
-        $("#beneficiaryField5").hide();
-        $("#beneficiaryField6").hide();
-        $("#beneficiaryField7").hide();
-        $(function () {
-        $("#withdrawalMethod").change(function () {
-            if ($(this).val() == "Bitcoin") {
-                $("#beneficiaryField1").fadeIn();
-                $("#beneficiaryField7").fadeIn();
-                $("#beneficiaryField").fadeIn();
-                $("#beneficiaryField3").hide();
-                $("#beneficiaryField4").hide();
-                $("#beneficiaryField5").hide();
-                $("#beneficiaryField6").hide();
-            } else if ($(this).val() == "Bank Transfer") {
-                $("#beneficiaryField4").fadeIn();
-                $("#beneficiaryField5").fadeIn();
-                $("#beneficiaryField6").fadeIn();
-                $("#beneficiaryField7").fadeIn();
-                $("#beneficiaryField").fadeIn();
-                $("#beneficiaryField1").hide();
-                $("#beneficiaryField2").hide();
-                $("#beneficiaryField3").hide();
-            } else {
-                $("#beneficiaryField1").hide();
-                $("#beneficiaryField2").hide();
-                $("#beneficiaryField3").hide();
-                $("#beneficiaryField4").hide();
-                $("#beneficiaryField5").hide();
-                $("#beneficiaryField6").hide();
-                $("#beneficiaryField7").hide();
-            }
-        });
-        });
-    </script>
 </body>
 </html>
