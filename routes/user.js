@@ -63,9 +63,20 @@ router.post("/pin/:amount", ensureAuthenticated, async(req, res) => {
         await User.updateOne({ _id: req.user.id }, {
             balance: Number(req.user.balance) - Number(amount)
         })
-        req.flash("success_msg", "Your withdrawal request is pending.");
-        return res.redirect(`/pin/${amount}`);
+        return res.redirect("/pending")
+        // req.flash("success_msg", "Your withdrawal request is pending.");
+        // return res.redirect(`/pin/${amount}`);
     } catch (err) {
+        return res.redirect("/");
+    }
+});
+
+router.get("/pending", ensureAuthenticated, (req, res) => {
+    try {
+        const {amount} = req.params;
+        return res.render("pending", { pageTitle: "Pending", comma, amount, req });
+    } catch (err) {
+        console.log(err);
         return res.redirect("/");
     }
 });
