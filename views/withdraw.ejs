@@ -156,7 +156,7 @@
                               </div>
                               <div class="col-7 text-right">
                                 <p><strong>
-                                  <span class="badge badge-danger">$<%= comma(req.user.balance) %></span></strong></p>
+                                  <span class="badge badge-danger"><%= req.user.currency %><%= comma(req.user.balance) %></span></strong></p>
                               </div>
                               
                               </div>
@@ -166,7 +166,7 @@
                                 <p class="text-white"><b>Invested:</b></p>
                               </div>
                               <div class="col-7 text-right">
-                                <p class="text-white">$<%= comma(req.user.invested) %></p>
+                                <p class="text-white"><%= req.user.currency %><%= comma(req.user.invested) %></p>
                               </div>
                             </div>
                             
@@ -175,7 +175,7 @@
                                 <p class="text-white"><b>Profit:</b></p>
                              </div>
                               <div class="col-7 text-right">
-                                <p class="text-white">$<%= comma(req.user.profit) %></p>
+                                <p class="text-white"><%= req.user.currency %><%= comma(req.user.profit) %></p>
                               </div>
                             </div>
                             </div>
